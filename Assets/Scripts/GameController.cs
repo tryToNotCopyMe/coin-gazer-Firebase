@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
 
     [Range(0f, 1f)]
     public float AutoCollectPercentage = 0.1f;
+    public float SaveDelay = 5f;
     public ShopItem[] ShopItems;
     public ResourceConfig[] ResConfigs;
     public Sprite[] ResSprites;
@@ -36,7 +37,8 @@ public class GameController : MonoBehaviour
     private List<ResourceController> _activeResources = new List<ResourceController>();
     private List<TapText> _tapTextPool = new List<TapText>();
 
-    private float _collectSecond;    
+    private float _collectSecond;
+    private float _saveDelayCounter;
 
     private TapText GetOrCreateTapText()
     {
@@ -60,7 +62,10 @@ public class GameController : MonoBehaviour
         
     void Update()
     {
-        _collectSecond += Time.unscaledDeltaTime;
+        float deltaTime = Time.unscaledDeltaTime;
+        _saveDelayCounter -= deltaTime;
+
+        _collectSecond += deltaTime;
         if (_collectSecond > 1f){
             CollectPerSecond();
             _collectSecond = 0f;
@@ -149,7 +154,11 @@ public class GameController : MonoBehaviour
             }            
         }
 
-        UserDataManager.Save();
+        UserDataManager.Save(_saveDelayCounter < 0f);
+        if (_saveDelayCounter < 0f)
+        {
+            _saveDelayCounter = SaveDelay;
+        }
     }
 
     public void CollectByTap(Vector3 tapPos, Transform parent)

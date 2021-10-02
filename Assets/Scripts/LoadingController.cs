@@ -17,7 +17,7 @@ public class LoadingController : MonoBehaviour
             SceneManager.LoadScene(1);
         });
 
-        /*
+        
 
         _cloudButton.onClick.AddListener(() =>
         {
@@ -25,7 +25,7 @@ public class LoadingController : MonoBehaviour
             StartCoroutine(UserDataManager.LoadFromCloud(() => SceneManager.LoadScene(1)));
         });
 
-        */
+        
     }
 
     private void SetButtonInteractable(bool interactable)

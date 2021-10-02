@@ -1,5 +1,4 @@
-﻿//using Firebase.Storage;
-using System.Collections;
+﻿using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,7 +22,7 @@ public class UserDataManager
             Progress = JsonUtility.FromJson<UserProgressData>(json);
         }
     }
-    /*
+    
     public static IEnumerator LoadFromCloud(System.Action onComplete)
     {
         StorageReference targetStorage = GetTargetCloudStorage();
@@ -58,12 +57,10 @@ public class UserDataManager
 
         onComplete?.Invoke();
     }
-    */
     public static void Save(bool uploadToCloud = false)
     {
         string json = JsonUtility.ToJson(Progress);
-        PlayerPrefs.SetString(PROGRESS_KEY, json);
-        /*
+        PlayerPrefs.SetString(PROGRESS_KEY, json);        
         if (uploadToCloud)
         {            
             byte[] data = Encoding.Default.GetBytes(json);
@@ -71,7 +68,7 @@ public class UserDataManager
 
             targetStore.PutBytesAsync(data);
         }
-        */
+        
     }
 
     public static bool HasResources(int index)
@@ -79,13 +76,12 @@ public class UserDataManager
         return index + 1 <= Progress.ResourceLevels.Count;
     }
 
-    /*
+    
     private static StorageReference GetTargetCloudStorage()
     {
         string deviceID = SystemInfo.deviceUniqueIdentifier;
         FirebaseStorage storage = FirebaseStorage.DefaultInstance;
 
         return storage.GetReferenceFromUrl($"{storage.RootReference}/{deviceID}");
-    }
-    */
+    }    
 }
