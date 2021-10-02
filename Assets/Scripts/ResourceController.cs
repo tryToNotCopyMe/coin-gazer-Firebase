@@ -65,6 +65,8 @@ public class ResourceController : MonoBehaviour
 
         ResourceUpCost.text = $"Upgrade Cost\n{GetUpgradeCost()}";
         ResourceDesc.text = $"{_config.Name} Lv.{_level}\n+{GetOutput().ToString("0")}";
+
+        AnalyticsManager.LogUpgradeEvent(_index, _level);
     }
 
     public void UnlockResource()
@@ -74,6 +76,8 @@ public class ResourceController : MonoBehaviour
         SetUnlocked(true);
         GameController.Instance.ShowNextResource();
         AchievementController.Instance.UnlockAchievement(AchievementType.UnlockResource, _config.Name);
+
+        AnalyticsManager.LogUnlockEvent(_index);
     }
 
     public void SetUnlocked(bool unlocked)

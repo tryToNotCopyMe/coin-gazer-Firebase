@@ -63,7 +63,8 @@ public class UserDataManager
         string json = JsonUtility.ToJson(Progress);
         PlayerPrefs.SetString(PROGRESS_KEY, json);        
         if (uploadToCloud)
-        {            
+        {
+            AnalyticsManager.SetUserProperties("gold", Progress.Gold.ToString());
             byte[] data = Encoding.Default.GetBytes(json);
             StorageReference targetStore = GetTargetCloudStorage();
 
